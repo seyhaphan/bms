@@ -2,7 +2,7 @@ package com.kshrd.bms.repository;
 
 import com.kshrd.bms.repository.dto.CategoryDto;
 import com.kshrd.bms.repository.provider.CategoryProvider;
-import com.kshrd.bms.rest.request.CategoryRequestModel;
+import com.kshrd.bms.rest.request.CategoryDescription;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,18 @@ public interface CategoryRepository {
     @Result(property = "name",column = "title")
     List<CategoryDto> findAll();
 
-    @InsertProvider(type = CategoryProvider.class,method = "insertSql")
-    boolean insert(CategoryDto category);
-
     @SelectProvider(type = CategoryProvider.class,method = "findCategoryById")
     @Result(property = "name",column = "title")
     CategoryDto findCategoryById(int id);
 
+    @InsertProvider(type = CategoryProvider.class,method = "insertSql")
+    boolean insert(CategoryDescription category);
+
+    @UpdateProvider(type = CategoryProvider.class,method = "updateSql")
+    boolean update(int id, CategoryDescription category);
+
     @DeleteProvider(type = CategoryProvider.class,method = "deleteSql")
     boolean delete(int id);
 
-    @UpdateProvider(type = CategoryProvider.class,method = "updateSql")
-    boolean update(int id, CategoryDto category);
+
 }

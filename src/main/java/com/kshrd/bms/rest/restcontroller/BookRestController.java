@@ -35,10 +35,13 @@ public class BookRestController {
     @GetMapping("/books")
     public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> findAll(){
         BaseApiResponse<List<BookResponseModel>> response = null;
+        //Get all book from service
 
         List<BookDto> books = bookService.findAll();
+        //Map book model to book response model
 
         List<BookResponseModel> bookResponse = new ArrayList<>();
+
         for (BookDto book : books){
             bookResponse.add(apiUtils.getMapper().map(book,BookResponseModel.class));
         }
@@ -53,8 +56,11 @@ public class BookRestController {
 
     //TODO: Find book by id
     @GetMapping("/books/{id}")
-    public ResponseEntity<BaseApiResponse<BookResponseModel>> findById(@PathVariable int id) throws ResponseStatusException {
+    public ResponseEntity<BaseApiResponse<BookResponseModel>> findById(
+            @PathVariable Integer id){
+
         BaseApiResponse<BookResponseModel> response = null;
+
         BookDto book = bookService.findById(id);
 
         if (book != null){
@@ -76,6 +82,7 @@ public class BookRestController {
     @PostMapping("/books")
     public ResponseEntity<BaseApiResponse<BookRequestModel>> insert(
             @RequestBody BookRequestModel bookRequestModel){
+
         BaseApiResponse<BookRequestModel> response = null;
 
         boolean isInserted = bookService.insert(apiUtils.getMapper().map(bookRequestModel,BookDto.class));
@@ -185,28 +192,18 @@ public class BookRestController {
         return ResponseEntity.ok(response);
     }
 
-//    @ApiIgnore
-//    @GetMapping(params ={"categoryId","name"})
-//    public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> filterBookBySql(
-//            @RequestParam(name = "categoryId",required = false,defaultValue = "0") Integer categoryId,
-//            @RequestParam(name = "name",required = false,defaultValue = "null") String name
-//    ){
-//        BaseApiResponse<List<BookResponseModel>> response=null;
-//        System.out.println("ID = " + categoryId);
-//        System.out.println("Name = " + name);
-//
-//        return ResponseEntity.ok(response);
-//    }
-
+    //TODO: filter by categoryID and name
     @ApiIgnore
     @GetMapping(path ="/books", params ={"categoryId","name"})
     public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> filterBooks(
         @RequestParam int categoryId,
         @RequestParam String name
     ){
-        System.out.println(name + categoryId);
+
         BaseApiResponse<List<BookResponseModel>> response = null;
+
         List<BookResponseModel> bookResponse = new ArrayList<>();
+
         List<BookDto> books =bookService.filterBook(categoryId,name);
         if (books.size() > 0){
             for (BookDto book : books){
@@ -214,7 +211,7 @@ public class BookRestController {
             }
             response = new BaseApiResponse<>(
                     bookResponse,
-                    Messages.Success.FIND_SUCCESS.getMessage()+"ok",
+                    Messages.Success.FIND_SUCCESS.getMessage(),
                     true);
         }else{
             response = new BaseApiResponse<>(

@@ -1,7 +1,5 @@
 package com.kshrd.bms.rest.response;
 
-import java.sql.Timestamp;
-
 public class BaseApiResponse<T> {
 
     private T data;

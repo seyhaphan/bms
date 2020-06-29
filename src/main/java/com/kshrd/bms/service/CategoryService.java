@@ -1,7 +1,7 @@
 package com.kshrd.bms.service;
 
 import com.kshrd.bms.repository.dto.CategoryDto;
-import com.kshrd.bms.rest.request.CategoryRequestModel;
+import com.kshrd.bms.rest.request.CategoryDescription;
 
 import java.util.List;
 
@@ -11,9 +11,10 @@ public interface CategoryService {
 
     CategoryDto findCategoryById(int id);
 
-    CategoryDto insert(CategoryDto category);
+    boolean insert(CategoryDescription category);
+    boolean update(int id,CategoryDescription name);
 
     CategoryDto delete(int id);
 
-    CategoryDto update(int id,CategoryDto name);
+
 }

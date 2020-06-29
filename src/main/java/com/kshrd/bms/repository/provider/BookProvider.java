@@ -52,19 +52,6 @@ public class BookProvider {
             WHERE("id = #{id}");
         }}.toString();
     }
-    public String filterByBookBySql(int categoryId,String name){
-        return new SQL(){{
-            SELECT("b.id id,b.title title, b.author,author,b.description description,b.thumbnail thumbnail, c.id cid,c.title c_title");
-            FROM("tb_books b");
-            INNER_JOIN("tb_categories c on b.category_id = c.id");
-            if (name != null || !name.equals("")){
-                WHERE("b.title like #{name} || '%'");
-            }else{
-                WHERE("c.id = #{categoryId}");
-            }
-
-        }}.toString();
-    }
 
     public String filterByNameSql(){
         return new SQL(){{

@@ -2,10 +2,11 @@ package com.kshrd.bms.rest.response;
 
 public class Messages {
     public enum Success{
-        FIND_SUCCESS("Find Book Successfully"),
-        INSERT_SUCCESS("Insert Book Successfully"),
-        DELETE_SUCCESS("Delete Book Successfully"),
-        UPDATE_SUCCESS("Update Book Successfully");
+        FIND_SUCCESS("Find Data Successfully"),
+        INSERT_SUCCESS("Insert Data Successfully"),
+        DELETE_SUCCESS("Delete Data Successfully"),
+        UPDATE_SUCCESS("Update Data Successfully"),
+        FILEUPLOAD_SUCCESS("File upload successfully");
         private String message;
 
         Success(String message) {
@@ -17,11 +18,12 @@ public class Messages {
         }
     }
     public enum Error{
-        FIND_FAILURE("Find Book not Successfully"),
-        RETRIEVE_FAILURE("Error retrieving Book with id = "),
-        INSERT_FAILURE("Insert Book not Successfully"),
-        DELETE_FAILURE("Can't delete book with id = "),
-        UPDATE_FAILURE("Error update book with id = ");
+        FIND_FAILURE("Find Data not Successfully"),
+        RETRIEVE_FAILURE("Error retrieving Data with id = "),
+        INSERT_FAILURE("Insert Data not Successfully"),
+        DELETE_FAILURE("Can't delete Data with id = "),
+        UPDATE_FAILURE("Error update Data with id = "),
+        NULL_VALUE("Can't null value!");
         private String message;
 
         Error(String message) {

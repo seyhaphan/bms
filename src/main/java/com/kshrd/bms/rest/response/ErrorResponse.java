@@ -1,22 +1,20 @@
 package com.kshrd.bms.rest.response;
 
-import org.springframework.http.HttpStatus;
-
 public class ErrorResponse {
-    private String message;
+    private String Error;
 
     public ErrorResponse() {
     }
 
-    public ErrorResponse(String message) {
-        this.message = message;
+    public ErrorResponse(String Error) {
+        this.Error = Error;
     }
 
-    public String getMessage() {
-        return message;
+    public String getError() {
+        return Error;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setError(String error) {
+        this.Error = error;
     }
 }

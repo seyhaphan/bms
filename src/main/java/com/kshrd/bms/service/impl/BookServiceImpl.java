@@ -92,13 +92,6 @@ public class BookServiceImpl implements BookService {
         return bookRepository.filterBookByCategory(categoryId);
     }
 
-    //TODO: filter book by categoryId and book name
-    @Override
-    public List<BookDto> filterBookBySql(int id, String name) {
-        return bookRepository.filterBook(id,name);
-    }
-
-
     //TODO: filter Books
     @Override
     public List<BookDto> filterBook(int categoryId, String name) {
