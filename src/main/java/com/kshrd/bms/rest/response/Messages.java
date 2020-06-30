@@ -18,12 +18,12 @@ public class Messages {
         }
     }
     public enum Error{
-        FIND_FAILURE("Find Data not Successfully"),
+        FIND_FAILURE("Error retrieving Data"),
         RETRIEVE_FAILURE("Error retrieving Data with id = "),
         INSERT_FAILURE("Insert Data not Successfully"),
         DELETE_FAILURE("Can't delete Data with id = "),
         UPDATE_FAILURE("Error update Data with id = "),
-        NULL_VALUE("Can't null value!");
+        EMPTY_VALUE("Can not be empty!");
         private String message;
 
         Error(String message) {

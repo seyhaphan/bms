@@ -59,21 +59,12 @@ public class BookRestController {
     public ResponseEntity<BaseApiResponse<BookResponseModel>> findById(
             @PathVariable Integer id){
 
-        BaseApiResponse<BookResponseModel> response = null;
-
         BookDto book = bookService.findById(id);
 
-        if (book != null){
-            response = new BaseApiResponse<>(
+        BaseApiResponse<BookResponseModel>  response = new BaseApiResponse<>(
                     apiUtils.getMapper().map(book,BookResponseModel.class),
                     Messages.Success.FIND_SUCCESS.getMessage(),
                     true);
-        }else {
-            response = new BaseApiResponse<>(
-                    Messages.Error.RETRIEVE_FAILURE.getMessage()+id,
-                    false
-            );
-        }
 
         return ResponseEntity.ok(response);
     }
@@ -85,7 +76,8 @@ public class BookRestController {
 
         BaseApiResponse<BookRequestModel> response = null;
 
-        boolean isInserted = bookService.insert(apiUtils.getMapper().map(bookRequestModel,BookDto.class));
+        boolean isInserted =  bookService.insert(apiUtils.getMapper().map(bookRequestModel,BookDto.class));
+
         if (isInserted)
             response = new BaseApiResponse<>(
                 bookRequestModel,
@@ -141,13 +133,14 @@ public class BookRestController {
     }
 
     //TODO: Filter by title
+    @ApiIgnore
     @GetMapping(path ="/books",params = "name")
     public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> filterByName(
             @RequestParam String name
     ){
         BaseApiResponse<List<BookResponseModel>> response = null;
         List<BookResponseModel> bookResponse = new ArrayList<>();
-        List<BookDto> books =bookService.filterBookByName(name);
+        List<BookDto> books = bookService.filterBookByName(name);
 
         if (books.size() > 0){
             for (BookDto book : books){
@@ -167,6 +160,7 @@ public class BookRestController {
     }
 
     //TODO: Filter by title
+    @ApiIgnore
     @GetMapping(path = "/books",params = "categoryId")
     public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> filterByCategory(
             @RequestParam int categoryId

@@ -3,7 +3,6 @@ package com.kshrd.bms.service.impl;
 import com.kshrd.bms.repository.BookRepository;
 import com.kshrd.bms.repository.dto.BookDto;
 import com.kshrd.bms.rest.request.BookRequestModel;
-import com.kshrd.bms.rest.response.BookResponseModel;
 import com.kshrd.bms.rest.response.Messages;
 import com.kshrd.bms.rest.utils.ApiUtils;
 import com.kshrd.bms.service.BookService;
@@ -32,21 +31,32 @@ public class BookServiceImpl implements BookService {
     //TODO: Find all books
     @Override
     public List<BookDto> findAll() {
-        return bookRepository.findAll();
+        List<BookDto> books = bookRepository.findAll();
+        if (books.size() > 0){
+            return books;
+        }else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.FIND_FAILURE.getMessage());
     }
 
     //TODO: Find book by id
     @Override
     public BookDto findById(int id){
-        return bookRepository.findById(id);
+        BookDto book =  bookRepository.findById(id);
+        if (book != null)
+            return book;
+        else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.RETRIEVE_FAILURE.getMessage()+id + ". Maybe book not found!");
     }
 
     //TODO: Insert book
     @Override
     public boolean insert(BookDto bookDto) {
-        try {
-            boolean isInserted = bookRepository.insert(bookDto);
-            if (isInserted) return true;
+        try{
+            if (bookDto != null){
+                boolean isInserted = bookRepository.insert(bookDto);
+                if (isInserted)
+                    return true;
+            }
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     Messages.Error.INSERT_FAILURE.getMessage());

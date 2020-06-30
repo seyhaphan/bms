@@ -31,7 +31,7 @@ public interface BookRepository {
     BookDto findById(int id);
 
     @InsertProvider(type = BookProvider.class,method = "insertSql")
-    boolean insert(BookDto book) throws Exception;
+    boolean insert(BookDto book);
 
     @DeleteProvider(type = BookProvider.class,method = "deleteSql")
     boolean delete(int id);

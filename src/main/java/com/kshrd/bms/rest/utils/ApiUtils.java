@@ -2,6 +2,9 @@ package com.kshrd.bms.rest.utils;
 
 import com.kshrd.bms.rest.response.BaseApiResponse;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -13,8 +16,7 @@ public class ApiUtils {
         return new ModelMapper();
     }
 
-    public Timestamp getTimestamp(){
-        return new Timestamp(System.currentTimeMillis());
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
-
 }

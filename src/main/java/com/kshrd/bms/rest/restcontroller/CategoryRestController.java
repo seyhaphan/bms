@@ -31,11 +31,10 @@ public class CategoryRestController {
     //TODO: find all category
     @GetMapping("/categories")
     public ResponseEntity<BaseApiResponse<List<CategoryDto>>> findAll(){
-        BaseApiResponse<List<CategoryDto>> response = null;
 
         List<CategoryDto> categories = categoryService.findAll();
 
-        response = new BaseApiResponse<>(
+        BaseApiResponse<List<CategoryDto>>  response = new BaseApiResponse<>(
                 categories,
                 Messages.Success.FIND_SUCCESS.getMessage(),
                 true);
@@ -46,19 +45,13 @@ public class CategoryRestController {
     //TODO: find category by id
     @GetMapping("/categories/{id}")
     public ResponseEntity<BaseApiResponse<CategoryDto>> findCategoryById(@PathVariable int id){
-        BaseApiResponse<CategoryDto> response = null;
 
         CategoryDto category = categoryService.findCategoryById(id);
-        if (category != null){
-            response = new BaseApiResponse<>(
-                    category,
-                    Messages.Success.FIND_SUCCESS.getMessage(),
-                    true);
-        }else{
-            response = new BaseApiResponse<>(
-                    Messages.Error.RETRIEVE_FAILURE.getMessage()+id,
-                    false);
-        }
+
+        BaseApiResponse<CategoryDto>  response = new BaseApiResponse<>(
+                category,
+                Messages.Success.FIND_SUCCESS.getMessage(),
+                true);
 
         return ResponseEntity.ok(response);
     }
@@ -69,17 +62,13 @@ public class CategoryRestController {
             @RequestBody CategoryDescription category
     ){
         BaseApiResponse<CategoryDescription> response = null;
+        boolean isInserted = categoryService.insert(category);
 
-        boolean isInserted =  categoryService.insert(category);
         if (isInserted){
             response = new BaseApiResponse<>(
-                    category,
-                    Messages.Success.INSERT_SUCCESS.getMessage(),
-                    true);
-        }else{
-            response = new BaseApiResponse<>(
-                    Messages.Error.INSERT_FAILURE.getMessage(),
-                    false);
+                category,
+                Messages.Success.INSERT_SUCCESS.getMessage(),
+                true);
         }
 
         return ResponseEntity.ok(response);
@@ -87,20 +76,15 @@ public class CategoryRestController {
 
     //TODO: Delete category by id
     @DeleteMapping("/categories/{id}")
-    public ResponseEntity<BaseApiResponse<CategoryDto>> delete(@PathVariable int id){
-        BaseApiResponse<CategoryDto> response = null;
+    public ResponseEntity<BaseApiResponse<CategoryDto>> delete(
+            @PathVariable int id){
 
         CategoryDto category = categoryService.delete(id);
-        if (category != null){
-            response = new BaseApiResponse<>(
-                    category,
-                    Messages.Success.DELETE_SUCCESS.getMessage(),
-                    true);
-        }else{
-            response = new BaseApiResponse<>(
-                    Messages.Error.DELETE_FAILURE.getMessage()+id,
-                    false);
-        }
+
+        BaseApiResponse<CategoryDto> response = new BaseApiResponse<>(
+                category,
+                Messages.Success.DELETE_SUCCESS.getMessage(),
+                true);
 
         return ResponseEntity.ok(response);
     }
@@ -111,21 +95,12 @@ public class CategoryRestController {
             @PathVariable int id,
             @RequestBody CategoryDescription category){
 
-        BaseApiResponse<CategoryDto> response = null;
+        categoryService.update(id,category);
 
-        boolean isUpdated = categoryService.update(id,category);
-        if (isUpdated){
-            response = new BaseApiResponse<>(
+        BaseApiResponse<CategoryDto>  response = new BaseApiResponse<>(
                     categoryService.findCategoryById(id),
                     Messages.Success.UPDATE_SUCCESS.getMessage(),
-                    true
-            );
-        }else{
-            response = new BaseApiResponse<>(
-                    Messages.Error.UPDATE_FAILURE.getMessage() + id,
-                    false
-            );
-        }
+                    true);
 
         return ResponseEntity.ok(response);
     }

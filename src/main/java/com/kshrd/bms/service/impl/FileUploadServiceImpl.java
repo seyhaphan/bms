@@ -13,19 +13,24 @@ import java.util.UUID;
 public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
-    public String uploadFile(MultipartFile fileUpload, HttpServletRequest request) throws IOException {
+    public String uploadFile(MultipartFile fileUpload,HttpServletRequest request){
         String pathUpload = "uploads";
+        String fileName = "";
+        try {
 
-        String path = request.getServletContext().getRealPath("/");
-        File files = new File(path + pathUpload);
-        if (!files.exists()){
-            files.mkdir();
+            String path = request.getServletContext().getRealPath("/");
+
+            File files = new File(path + pathUpload);
+            if (!files.exists()){
+                files.mkdir();
+            }
+
+            fileName = UUID.randomUUID()+fileUpload.getOriginalFilename();
+
+            fileUpload.transferTo(new File(files.getPath()+File.separator+fileName));
+        }catch (IOException e) {
+            e.printStackTrace();
         }
-
-        String fileName = UUID.randomUUID()+fileUpload.getOriginalFilename();
-
-        fileUpload.transferTo(new File(files.getPath()+File.separator+fileName));
-
         return request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"+pathUpload+"/"+fileName;
     }
 }
