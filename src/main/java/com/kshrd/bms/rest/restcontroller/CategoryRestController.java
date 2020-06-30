@@ -6,6 +6,7 @@ import com.kshrd.bms.rest.response.BaseApiResponse;
 import com.kshrd.bms.rest.response.Messages;
 import com.kshrd.bms.rest.utils.ApiUtils;
 import com.kshrd.bms.service.impl.CategoryServiceImpl;
+import com.kshrd.bms.utilities.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +29,23 @@ public class CategoryRestController {
         this.categoryService = categoryService;
     }
 
-    //TODO: find all category
+    //TODO: Find All Category
     @GetMapping("/categories")
-    public ResponseEntity<BaseApiResponse<List<CategoryDto>>> findAll(){
+    public ResponseEntity<BaseApiResponse<List<CategoryDto>>> findAll(
+            @RequestParam(value = "page",required = false,defaultValue = "1") int page ,
+            @RequestParam(value = "limit",required = false,defaultValue = "5") int limit
+    ){
+        //Pagination
+        Pagination pagination = new Pagination();
+        pagination.setPage(page);
+        pagination.setLimit(limit);
+        pagination.setTotalCount(categoryService.totalCount());
+        pagination.setPagesToShow(limit);
 
         List<CategoryDto> categories = categoryService.findAll();
 
         BaseApiResponse<List<CategoryDto>>  response = new BaseApiResponse<>(
+                pagination,
                 categories,
                 Messages.Success.FIND_SUCCESS.getMessage(),
                 true);
@@ -42,7 +53,7 @@ public class CategoryRestController {
         return ResponseEntity.ok(response);
     }
 
-    //TODO: find category by id
+    //TODO: Find Category By Id
     @GetMapping("/categories/{id}")
     public ResponseEntity<BaseApiResponse<CategoryDto>> findCategoryById(@PathVariable int id){
 
@@ -74,7 +85,7 @@ public class CategoryRestController {
         return ResponseEntity.ok(response);
     }
 
-    //TODO: Delete category by id
+    //TODO: Delete Category By Id
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<BaseApiResponse<CategoryDto>> delete(
             @PathVariable int id){
@@ -89,7 +100,7 @@ public class CategoryRestController {
         return ResponseEntity.ok(response);
     }
 
-    //TODO: Update category by id
+    //TODO: Update Category By Id
     @PutMapping("/categories/{id}")
     public ResponseEntity<BaseApiResponse<CategoryDto>> update(
             @PathVariable int id,

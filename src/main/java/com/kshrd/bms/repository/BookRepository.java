@@ -4,6 +4,7 @@ import com.kshrd.bms.repository.dto.BookDto;
 import com.kshrd.bms.repository.provider.BookProvider;
 import com.kshrd.bms.rest.request.BookRequestModel;
 import com.kshrd.bms.rest.response.Messages;
+import com.kshrd.bms.utilities.Pagination;
 import org.apache.ibatis.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,11 @@ public interface BookRepository {
             @Result(property = "category.id" , column = "cid"),
             @Result(property = "category.name", column = "c_title")
     })
-    List<BookDto> findAll();
+    List<BookDto> findAll(@Param("pagination")Pagination pagination);
+
+    @Select("SELECT COUNT(*) FROM tb_books")
+    int totalCount();
+
 
     @SelectProvider(type = BookProvider.class,method = "findById")
     @Results({

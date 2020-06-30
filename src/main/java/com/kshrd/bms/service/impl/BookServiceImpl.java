@@ -6,6 +6,7 @@ import com.kshrd.bms.rest.request.BookRequestModel;
 import com.kshrd.bms.rest.response.Messages;
 import com.kshrd.bms.rest.utils.ApiUtils;
 import com.kshrd.bms.service.BookService;
+import com.kshrd.bms.utilities.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class BookServiceImpl implements BookService {
 
     //TODO: Find all books
     @Override
-    public List<BookDto> findAll() {
-        List<BookDto> books = bookRepository.findAll();
+    public List<BookDto> findAll(Pagination pagination) {
+        List<BookDto> books = bookRepository.findAll(pagination);
         if (books.size() > 0){
             return books;
         }else
@@ -106,5 +107,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> filterBook(int categoryId, String name) {
         return bookRepository.filterBook(categoryId,name);
+    }
+
+    @Override
+    public int totalCount() {
+       return bookRepository.totalCount();
     }
 }

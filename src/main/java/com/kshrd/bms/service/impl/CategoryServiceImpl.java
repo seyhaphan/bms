@@ -21,6 +21,11 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Override
+    public int totalCount() {
+        return categoryRepository.totalCount();
+    }
+
     //TODO: find all category
     @Override
     public List<CategoryDto> findAll() {

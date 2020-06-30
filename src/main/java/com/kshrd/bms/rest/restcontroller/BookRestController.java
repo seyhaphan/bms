@@ -7,10 +7,10 @@ import com.kshrd.bms.rest.response.BookResponseModel;
 import com.kshrd.bms.rest.response.Messages;
 import com.kshrd.bms.rest.utils.ApiUtils;
 import com.kshrd.bms.service.impl.BookServiceImpl;
+import com.kshrd.bms.utilities.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
@@ -33,11 +33,21 @@ public class BookRestController {
 
     //TODO: Find all books
     @GetMapping("/books")
-    public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> findAll(){
+    public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> findAll(
+            @RequestParam(value = "page",required = false,defaultValue = "1") int page ,
+            @RequestParam(value = "limit",required = false,defaultValue = "5") int limit
+    ){
         BaseApiResponse<List<BookResponseModel>> response = null;
+        //Pagination
+        Pagination pagination = new Pagination();
+        pagination.setPage(page);
+        pagination.setLimit(limit);
+        pagination.setTotalCount(bookService.totalCount());
+        pagination.setPagesToShow(limit);
+
         //Get all book from service
 
-        List<BookDto> books = bookService.findAll();
+        List<BookDto> books = bookService.findAll(pagination);
         //Map book model to book response model
 
         List<BookResponseModel> bookResponse = new ArrayList<>();
@@ -47,6 +57,7 @@ public class BookRestController {
         }
 
         response = new BaseApiResponse<>(
+                pagination,
                 bookResponse,
                 Messages.Success.FIND_SUCCESS.getMessage(),
                 true);

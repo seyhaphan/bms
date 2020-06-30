@@ -9,6 +9,8 @@ public interface CategoryService {
 
     List<CategoryDto> findAll();
 
+    int totalCount();
+
     CategoryDto findCategoryById(int id);
 
     boolean insert(CategoryDescription category);

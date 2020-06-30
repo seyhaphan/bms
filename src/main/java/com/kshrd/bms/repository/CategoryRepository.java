@@ -15,6 +15,9 @@ public interface CategoryRepository {
     @Result(property = "name",column = "title")
     List<CategoryDto> findAll();
 
+    @Select("SELECT COUNT(*) FROM tb_categories")
+    int totalCount();
+
     @SelectProvider(type = CategoryProvider.class,method = "findCategoryById")
     @Result(property = "name",column = "title")
     CategoryDto findCategoryById(int id);

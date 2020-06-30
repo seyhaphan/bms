@@ -1,10 +1,14 @@
 package com.kshrd.bms.rest.response;
 
+import com.kshrd.bms.utilities.Pagination;
+
 public class BaseApiResponse<T> {
 
+    private Pagination pagination;
     private T data;
     private String message;
     private boolean status;
+
 
     public BaseApiResponse() {
     }
@@ -18,6 +22,21 @@ public class BaseApiResponse<T> {
         this.data = data;
         this.message = message;
         this.status = status;
+    }
+
+    public BaseApiResponse(Pagination pagination, T data, String message, boolean status) {
+        this.pagination = pagination;
+        this.data = data;
+        this.message = message;
+        this.status = status;
+    }
+
+    public Pagination getPagination() {
+        return pagination;
+    }
+
+    public void setPagination(Pagination pagination) {
+        this.pagination = pagination;
     }
 
     public String getMessage() {
