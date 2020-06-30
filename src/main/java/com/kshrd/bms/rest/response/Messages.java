@@ -18,8 +18,8 @@ public class Messages {
         }
     }
     public enum Error{
-        FIND_FAILURE("Error retrieving Data"),
-        RETRIEVE_FAILURE("Error retrieving Data with id = "),
+        FIND_FAILURE("Error Retrieving Data"),
+        RETRIEVE_FAILURE("Error Retrieving Data with id = "),
         INSERT_FAILURE("Insert Data not Successfully"),
         DELETE_FAILURE("Can't delete Data with id = "),
         UPDATE_FAILURE("Error update Data with id = "),

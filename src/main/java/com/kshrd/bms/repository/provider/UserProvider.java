@@ -8,7 +8,7 @@ public class UserProvider {
         return new SQL(){{
             SELECT("*");
             FROM("users");
-            WHERE("username = #{username}");
+            WHERE("email = #{email}");
         }}.toString();
     }
 

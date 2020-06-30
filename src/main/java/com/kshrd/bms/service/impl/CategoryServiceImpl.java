@@ -5,6 +5,7 @@ import com.kshrd.bms.repository.dto.CategoryDto;
 import com.kshrd.bms.rest.request.CategoryDescription;
 import com.kshrd.bms.rest.response.Messages;
 import com.kshrd.bms.service.CategoryService;
+import com.kshrd.bms.utilities.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     //TODO: find all category
     @Override
-    public List<CategoryDto> findAll() {
-        List<CategoryDto> getCategories = categoryRepository.findAll();
+    public List<CategoryDto> findAll(Pagination pagination) {
+        List<CategoryDto> getCategories = categoryRepository.findAll(pagination);
         if (getCategories.size() > 0){
             return getCategories;
         }else{
@@ -56,12 +57,9 @@ public class CategoryServiceImpl implements CategoryService {
             boolean isInserted = categoryRepository.insert(category);
             if (isInserted)
                 return true;
-            else{
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.EMPTY_VALUE.getMessage());
-            }
         }else
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,Messages.Error.INSERT_FAILURE.getMessage());
-
+        return false;
     }
 
     //TODO: Delete category by id
@@ -69,11 +67,12 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto delete(int id) {
         CategoryDto categoryDto = categoryRepository.findCategoryById(id);
         if(categoryDto != null){
-            categoryRepository.delete(id);
+           boolean isDelete = categoryRepository.delete(id);
+          if (isDelete) return categoryDto;
         }else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Messages.Error.DELETE_FAILURE.getMessage()+id);
         }
-        return categoryDto;
+        return null;
     }
 
     //TODO: Update category by id

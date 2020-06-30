@@ -9,17 +9,17 @@ import java.util.List;
 public class UserDto implements UserDetails {
     private int id;
     private String userId;
-    private String username;
+    private String email;
     private String password;
     private List<RoleDto> roles;
 
     public UserDto() {
     }
 
-    public UserDto(int id, String userId, String username, String password, List<RoleDto> roles) {
+    public UserDto(int id, String userId, String email, String password, List<RoleDto> roles) {
         this.id = id;
         this.userId = userId;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.roles = roles;
     }
@@ -32,8 +32,8 @@ public class UserDto implements UserDetails {
         this.userId = userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UserDto implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class UserDto implements UserDetails {
         return "UserDto{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';

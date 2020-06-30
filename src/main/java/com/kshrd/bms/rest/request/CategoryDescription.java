@@ -1,7 +1,8 @@
 package com.kshrd.bms.rest.request;
 
 public class CategoryDescription {
-    String name;
+
+    private String name;
 
     public CategoryDescription() {
     }

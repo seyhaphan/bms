@@ -36,7 +36,7 @@ public class BookServiceImpl implements BookService {
         if (books.size() > 0){
             return books;
         }else
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.FIND_FAILURE.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.FIND_FAILURE.getMessage()+".Maybe no data!");
     }
 
     //TODO: Find book by id
@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
         if (book != null)
             return book;
         else
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.RETRIEVE_FAILURE.getMessage()+id + ". Maybe book not found!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,Messages.Error.RETRIEVE_FAILURE.getMessage()+id + ". Maybe no data!");
     }
 
     //TODO: Insert book

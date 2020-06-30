@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface FileUploadService {
 
+    //Upload File
     String uploadFile(MultipartFile fileUpload, HttpServletRequest request);
 
 }

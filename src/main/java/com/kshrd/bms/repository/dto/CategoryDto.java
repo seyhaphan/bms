@@ -1,7 +1,5 @@
 package com.kshrd.bms.repository.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class CategoryDto {
     private int id;
     private String name;

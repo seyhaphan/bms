@@ -11,14 +11,16 @@ import java.util.List;
 @Repository
 public interface UserRepository {
 
+    //TODO: Load User By Username
     @SelectProvider(type = UserProvider.class,method = "loadUserByUsername")
     @Results({
             @Result(column = "user_id",property = "userId"),
             @Result(column = "id",property = "roles",many =
             @Many(select = "selectRolesByUserId"))
     })
-    UserDto loadUserByUsername(String username);
+    UserDto loadUserByUsername(String email);
 
+    //TODO: Get Roles From Users
     @SelectProvider(type = UserProvider.class, method = "selectRolesByUserIdSql")
     List<RoleDto> selectRolesByUserId(int id);
 }

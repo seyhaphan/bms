@@ -12,6 +12,7 @@ public class BookProvider {
             INNER_JOIN("tb_categories c on b.category_id = c.id ORDER BY b.id desc");
             LIMIT(pagination.getLimit());
             OFFSET(pagination.getOffset());
+
         }}.toString();
     }
 
@@ -74,7 +75,7 @@ public class BookProvider {
         }}.toString();
     }
 
-    public String filterBook() {
+    public String filterBook(Pagination pagination) {
         return new SQL(){{
             SELECT("b.id id,b.title title, b.author,author,b.description description,b.thumbnail thumbnail, c.id cid,c.title c_title");
             FROM("tb_books b");
@@ -82,7 +83,6 @@ public class BookProvider {
             WHERE("c.id = #{categoryId}");
             AND();
             WHERE("b.title like #{name} || '%'");
-
         }}.toString();
     }
 }

@@ -35,6 +35,7 @@ public class CategoryRestController {
             @RequestParam(value = "page",required = false,defaultValue = "1") int page ,
             @RequestParam(value = "limit",required = false,defaultValue = "5") int limit
     ){
+
         //Pagination
         Pagination pagination = new Pagination();
         pagination.setPage(page);
@@ -42,7 +43,7 @@ public class CategoryRestController {
         pagination.setTotalCount(categoryService.totalCount());
         pagination.setPagesToShow(limit);
 
-        List<CategoryDto> categories = categoryService.findAll();
+        List<CategoryDto> categories = categoryService.findAll(pagination);
 
         BaseApiResponse<List<CategoryDto>>  response = new BaseApiResponse<>(
                 pagination,
@@ -91,11 +92,10 @@ public class CategoryRestController {
             @PathVariable int id){
 
         CategoryDto category = categoryService.delete(id);
-
         BaseApiResponse<CategoryDto> response = new BaseApiResponse<>(
-                category,
-                Messages.Success.DELETE_SUCCESS.getMessage(),
-                true);
+                    category,
+                    Messages.Success.DELETE_SUCCESS.getMessage(),
+                    true);
 
         return ResponseEntity.ok(response);
     }
@@ -105,13 +105,18 @@ public class CategoryRestController {
     public ResponseEntity<BaseApiResponse<CategoryDto>> update(
             @PathVariable int id,
             @RequestBody CategoryDescription category){
-
-        categoryService.update(id,category);
-
-        BaseApiResponse<CategoryDto>  response = new BaseApiResponse<>(
+        BaseApiResponse<CategoryDto> response = null;
+        boolean isUpdate =  categoryService.update(id,category);
+        if (isUpdate){
+            response = new BaseApiResponse<>(
                     categoryService.findCategoryById(id),
                     Messages.Success.UPDATE_SUCCESS.getMessage(),
                     true);
+        }else{
+            response = new BaseApiResponse<>(
+                    Messages.Error.UPDATE_FAILURE.getMessage()+id,
+                    false);
+        }
 
         return ResponseEntity.ok(response);
     }

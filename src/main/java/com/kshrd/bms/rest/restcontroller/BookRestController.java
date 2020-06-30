@@ -37,6 +37,7 @@ public class BookRestController {
             @RequestParam(value = "page",required = false,defaultValue = "1") int page ,
             @RequestParam(value = "limit",required = false,defaultValue = "5") int limit
     ){
+        System.out.println("Filter work");
         BaseApiResponse<List<BookResponseModel>> response = null;
         //Pagination
         Pagination pagination = new Pagination();
@@ -170,7 +171,7 @@ public class BookRestController {
         return ResponseEntity.ok(response);
     }
 
-    //TODO: Filter by title
+    //TODO: Filter by categoryId
     @ApiIgnore
     @GetMapping(path = "/books",params = "categoryId")
     public ResponseEntity<BaseApiResponse<List<BookResponseModel>>> filterByCategory(
@@ -204,7 +205,6 @@ public class BookRestController {
         @RequestParam int categoryId,
         @RequestParam String name
     ){
-
         BaseApiResponse<List<BookResponseModel>> response = null;
 
         List<BookResponseModel> bookResponse = new ArrayList<>();
@@ -220,7 +220,7 @@ public class BookRestController {
                     true);
         }else{
             response = new BaseApiResponse<>(
-                    Messages.Error.FIND_FAILURE.getMessage()+". Maybe book not found!",
+                    Messages.Error.FIND_FAILURE.getMessage()+". Maybe no data!",
                     false);
         }
         return ResponseEntity.ok(response);

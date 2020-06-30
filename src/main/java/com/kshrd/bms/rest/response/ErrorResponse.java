@@ -3,6 +3,7 @@ package com.kshrd.bms.rest.response;
 import org.springframework.http.HttpStatus;
 
 public class ErrorResponse {
+
     private HttpStatus status;
     private String message;
 
